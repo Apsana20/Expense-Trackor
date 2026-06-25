@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+<div class="card">
+    <h2>Monthly Budget</h2>
+    <div class="card">
+    <h2>Remaining Budget</h2>
+    <h1>₹{{ remaining }}</h1>
+</div>
+   <div class="cards">
+
+    <div class="card">
+        <h2>Total Expense</h2>
+        <h1>₹{{ total }}</h1>
+    </div>
+
+    <div class="card">
+        <h2>Total Records</h2>
+        <h1>{{ count }}</h1>
+    </div>
+
+    <div class="card">
+        <h2>Monthly Budget</h2>
+        <h1>₹{{ budget }}</h1>
+    </div>
+
+    <div class="card">
+        <h2>Remaining Budget</h2>
+        <h1>₹{{ remaining }}</h1>
+    </div>
+
+    <div class="card">
+        <h2>Today's Date</h2>
+        <h1>{{ current_date }}</h1>
+    </div>
+
+</div>
+
+    <form action="/budget" method="POST">
+
+        <input
+        type="number"
+        name="budget"
+        placeholder="Enter Monthly Budget"
+        required>
+
+        <button type="submit">
+            Save Budget
+        </button>
+
+    </form>
+
+</div>
+
+<br>
+
+<div class="cards">
+
+    <div class="card">
+        <h2>Total Expense</h2>
+        <h1>₹{{ total }}</h1>
+    </div>
+
+    <div class="card">
+        <h2>Total Records</h2>
+        <h1>{{ count }}</h1>
+    </div>
+
+    <div class="card">
+        <h2>Today's Date</h2>
+        <h1>{{ current_date }}</h1>
+    </div>
+
+</div>
+<form action="/search">
+    <br>
+
+<a href="/export">
+    <button class="btn">
+        📥 Export Excel
+    </button>
+</a>
+<a href="/pdf">
+    <button class="btn">
+        📄 Export PDF
+    </button>
+</a>
+
+<br><br>
+
+<input
+type="text"
+name="keyword"
+placeholder="Search Expense">
+
+<button>
+
+Search
+
+</button>
+
+</form>
+
+<br>
+
+<table>
+
+<tr>
+
+<th>Title</th>
+<th>Amount</th>
+<th>Category</th>
+<th>Date</th>
+<th>Action</th>
+
+</tr>
+
+{% for expense in expenses %}
+
+<tr>
+
+<td>{{ expense.title }}</td>
+
+<td>₹{{ expense.amount }}</td>
+
+<td>{{ expense.category }}</td>
+
+<td>{{ expense.date }}</td>
+
+<td>
+
+<a href="/edit/{{ expense.id }}" class="edit">
+Edit
+</a>
+
+<a href="/delete/{{ expense.id }}" class="delete">
+Delete
+</a>
+<a href="/">All</a>
+
+<a href="/filter/Food">Food</a>
+
+<a href="/filter/Travel">Travel</a>
+
+<a href="/filter/Shopping">Shopping</a>
+
+<a href="/filter/Bills">Bills</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<div class="card" style="margin-top:30px;">
+    <h2>Expense Analytics</h2>
+    <canvas id="expenseChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('expenseChart');
+
+new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Food', 'Travel', 'Shopping', 'Bills'],
+        datasets: [{
+            data: [{{ food }}, {{ travel }}, {{ shopping }}, {{ bills }}],
+            backgroundColor: [
+                '#4CAF50',
+                '#2196F3',
+                '#FFC107',
+                '#F44336'
+            ]
+        }]
+    },
+    options: {
+        responsive: true
+    }
+});
+</script>
+
+{% endblock %}

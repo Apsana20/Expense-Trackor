@@ -1,0 +1,32 @@
+<table>
+
+<tr>
+    <th>Name</th>
+    <th>Amount</th>
+    <th>Category</th>
+    <th>Action</th>
+</tr>
+
+{% for expense in expenses %}
+
+<tr>
+
+<td>{{ expense.name }}</td>
+
+<td>₹{{ expense.amount }}</td>
+
+<td>{{ expense.category }}</td>
+
+<td>
+<a href="/delete/{{ loop.index0 }}">
+<button class="delete-btn">
+Delete
+</button>
+</a>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>

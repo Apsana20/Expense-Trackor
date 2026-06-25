@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Tracker Pro</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h2>💰 Expense Tracker</h2>
+
+    <a href="/"><i class="fas fa-home"></i> Dashboard</a>
+
+    <a href="/add"><i class="fas fa-plus-circle"></i> Add Expense</a>
+
+</div>
+
+<div class="main-content">
+
+{% block content %}
+
+{% endblock %}
+
+</div>
+
+</body>
+</html>
